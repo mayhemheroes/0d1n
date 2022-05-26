@@ -1,0 +1,5 @@
+project: rnshah9/0d1n
+target: 0d1n
+
+cmds:
+  - cmd: /repo/bin/0d1n --host "google.com" --payloads @@ --threads 2 --timeout 4 --log log
