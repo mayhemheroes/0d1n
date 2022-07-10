@@ -243,15 +243,17 @@ void spider(void *in)
 			curl_easy_setopt(curl, CURLOPT_CONNECT_ONLY, 1L);
 
 
-// to not send requests in same time (load balancer can block)
-// This code block is for bypass time based WAFs or load balancers
-		usleep(rand()%1000); 
-		usleep(rand()%1000); 
-		short position_t = rand()%15;
-		// you can calibrate this point array
-		short array_time[] = { 690, 435, 2915, 1720, 1050, 1600, 200, 800, 500 , 600, 700, 380, 455, 755, 930, 1100 };
-		usleep( array_time[position_t]  ); // random microsend wait each request
-
+// this code chunk purpose,is for not send requests at the same time (load balancer and WAF can detect and block)
+// This is for bypass time based request detection in WAFs or load balancers
+		if(param.race_test==false)
+		{
+			usleep(rand()%1000); 
+			usleep(rand()%1000); 
+			short position_t = rand()%15;
+			// you can calibrate this point array
+			short array_time[] = { 690, 435, 2915, 1720, 1050, 1600, 200, 800, 500 , 600, 700, 380, 455, 755, 930, 1100 };
+			usleep( array_time[position_t]  ); // random microsend wait each request
+		}
 
 // custom http request
 		if (param.custom!=NULL)
