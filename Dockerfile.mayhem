@@ -1,15 +1,4 @@
-FROM --platform=linux/amd64 ubuntu:22.04 as builder
-
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential libcurl3-dev
-
-COPY . /repo
-
-RUN mkdir -p /deps
-RUN ldd /repo/bin/0d1n | tr -s '[:blank:]' '\n' | grep '^/' | xargs -I % sh -c 'cp % /deps;'
-
 FROM ubuntu:22.04 as package
-
-COPY --from=builder /deps /deps
-COPY --from=builder /repo/bin/0d1n /repo/bin/0d1n
-ENV LD_LIBRARY_PATH=/deps
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y libcurl4
+COPY ./bin/0d1n /
