@@ -2,4 +2,4 @@ project: 0d1n
 target: 0d1n
 
 cmds:
-  - cmd: /repo/bin/0d1n --host "https://google-gruyere.appspot.com/446442673108694327762772969458092695865/" --payloads @@ --threads 2 --timeout 4 --log log
+  - cmd: /0d1n --host "https://google-gruyere.appspot.com/446442673108694327762772969458092695865/" --payloads @@ --threads 2 --timeout 4 --log log
