@@ -59,7 +59,7 @@ void init_banner_odin()
    " `.    `-'  `-'  `-'  `-'  `-'  .'   \n"
    "   `---------------------------'     \n"
  YELLOW
- "0d1n Web Hacking Tool version 3.7\n"
+ "0d1n Web Hacking Tool version 3.8\n"
  LAST
  "--host :	Host to scan or  GET method to fuzz  site.com/page.jsp?var=^&var2=^ \n"
  "--post :	POST method fuzz params  ex: 'var=^&x=^...'\n"
@@ -92,9 +92,10 @@ YELLOW
  "\nEnable-options-args:\n"
 LAST
  "--save_response :   Enable save response highlights view when you click at http status code in datatables \n"
- "--json_headers :   Enable add JSON headers in Request \n\n"
- "--keep_alive_test : Enable no-cache header + keep alive with rand number to test Denial of Service \n\n"
- "--max_requests : keep alive test total requests in test \n\n"
+ "--json_headers :   Enable add JSON headers in Request \n"
+ "--keep_alive_test : Enable no-cache header + keep alive with rand number to test Denial of Service \n"
+ "--max_requests : keep alive test total requests in test \n"
+ "--race : Enable a resource to explore race conditions through multithread in sending requests. So the number of requests simultaneously follow the number of threads(input of argument --threads).\n\n"
  YELLOW
  "Example 1 to find SQL-injection:\n"
 LAST
@@ -192,7 +193,8 @@ parser_opts (int argc, char **argv)
 		{"json_headers", no_argument, 0, 'j'},
 		{"keep_alive_test", no_argument, 0, '5'},
  		{"max_requests", required_argument, NULL, '6'},
- 		{"token_name", required_argument, NULL, '4'}, 
+ 		{"token_name", required_argument, NULL, '4'},
+		{"race", no_argument, 0, 'r'},
 		{NULL, 0, NULL, 0}
 	};
 	
@@ -209,8 +211,10 @@ parser_opts (int argc, char **argv)
 	param.max_requests = 0;
 	param.keep_alive_test = false;
 	param.save_response = false;
+	param.race_test = false;
+	param.json_headers = false;
 
- 	while ((c = getopt_long(argc, argv, "h:p:f:z:e:c:i:a:P:b:d:o:u:s:t:T:1:2:w:k:j:V:3:4:5:6:7",long_options,NULL)) != -1)
+ 	while ((c = getopt_long(argc, argv, "h:p:f:z:e:c:i:a:P:b:d:o:u:s:t:T:1:2:w:k:j:V:3:4:5:6:7:r",long_options,NULL)) != -1)
   		switch(c) 
   		{
 // Host
@@ -442,7 +446,10 @@ parser_opts (int argc, char **argv)
    			case 'k':
     				param.save_response = true;
 				break;
- 	
+ // explore race condition	
+   			case 'r':
+    				param.race_test = true;
+				break;
 		
    			case 'j':
     				param.json_headers = true;

@@ -79,6 +79,7 @@ struct choice  {
 	char *path_output;
 	char *datatable;
 	bool save_response;
+	bool race_test;
 	bool json_headers;
 	bool keep_alive_test;
 	int max_requests;
