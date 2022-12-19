@@ -1,0 +1,6 @@
+project: 0d1n
+target: deadspace
+
+cmds:
+  - cmd: /fuzz_deadspace
+    libfuzzer: true
