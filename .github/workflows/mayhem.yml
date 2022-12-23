@@ -60,7 +60,6 @@ jobs:
       matrix:
         mayhemfile:
           - mayhem/Mayhemfile_deadspace
-          - mayhem/Mayhemfile_0d1n
 
     steps:
       - uses: actions/checkout@v3
